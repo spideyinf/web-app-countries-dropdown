@@ -1,54 +1,75 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Listbox, Transition } from "@headlessui/react";
-import { CheckIcon, ChevronDownIcon } from "@heroicons/react/20/solid";
+import {
+  ArrowPathIcon,
+  CheckIcon,
+  ChevronDownIcon,
+} from "@heroicons/react/20/solid";
+import { DropdownOption } from "src/types/common";
+import clsx from "clsx";
 
-type Props<T> = {
-  options?: T[];
-  defaultValue?: T;
+type Props = {
+  options: DropdownOption[];
+  defaultValue?: string | number;
   placeholder?: string;
-  onChange: (item: T) => void;
+  value?: string | number;
+  disabled?: boolean;
+  isLoading?: boolean;
+  onChange: (value: number) => void;
 };
 
-const people = [
-  { id: 1, name: "Durward Reynolds", unavailable: false },
-  { id: 2, name: "Kenton Towne", unavailable: false },
-  { id: 3, name: "Therese Wunsch", unavailable: false },
-  { id: 4, name: "Benedict Kessler", unavailable: true },
-  { id: 5, name: "Katelyn Rohan", unavailable: false },
-];
-
-const Dropdown = <
-  T extends {
-    id: number;
-    name: string;
-    unavailable: boolean;
-  }
->({
-  options = people as T[],
+const Dropdown = ({
+  options = [],
   defaultValue,
+  value,
+  disabled,
+  isLoading,
   placeholder = "Select an option",
   onChange,
-}: Props<T>) => {
-  const [selected, setSelected] = useState<T | null>(defaultValue || null);
+}: Props) => {
+  const [selected, setSelected] = useState<DropdownOption | null>(null);
 
-  const handleSelect = (item: T) => {
+  const handleSelect = (item: DropdownOption) => {
+    if (disabled || isLoading) return;
     setSelected(item);
-    onChange(item);
+    onChange(item.value);
   };
+
+  useEffect(() => {
+    setSelected(
+      options.find((option) => option.value === defaultValue) || null
+    );
+  }, [defaultValue, options]);
+
+  useEffect(() => {
+    setSelected(options.find((option) => option.value === value) || null);
+  }, [value, options]);
 
   return (
     <div className="w-full md:w-72">
       <Listbox value={selected} onChange={handleSelect}>
         <div className="relative mt-1">
-          <Listbox.Button className="relative w-full cursor-default rounded-md bg-white py-3 pl-3 pr-10 text-left border focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
+          <Listbox.Button
+            className={clsx(
+              "relative w-full cursor-default rounded-md bg-white py-3 pl-3 pr-10 text-left border focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm",
+              disabled && "bg-gray-100 text-gray-400 cursor-not-allowed"
+            )}
+          >
             <span className="block truncate">
-              {selected ? selected?.name : placeholder}
+              {selected ? selected?.label : placeholder}
             </span>
             <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-              <ChevronDownIcon
-                className="h-5 w-5 text-gray-400"
-                aria-hidden="true"
-              />
+              {isLoading ? (
+                <ArrowPathIcon
+                  className="h-5 w-5 text-gray-400 animate-spin"
+                  aria-hidden="true"
+                />
+              ) : (
+                <ChevronDownIcon
+                  className="h-5 w-5 text-gray-400"
+                  aria-hidden="true"
+                />
+              )}
             </span>
           </Listbox.Button>
           <Transition
@@ -75,7 +96,7 @@ const Dropdown = <
                           selected ? "font-medium" : "font-normal"
                         }`}
                       >
-                        {option.name}
+                        {option.label}
                       </span>
                       {selected ? (
                         <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-red-600">
