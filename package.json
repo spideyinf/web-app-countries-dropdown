@@ -1,29 +1,20 @@
 {
-  "name": "vital",
+  "name": "web-app-countries-dropdowns",
   "version": "1.0.0",
-  "description": "Starter template for Vite with React (TypeScript). Supports Tailwind. Vitest and @react/testing-library configured and ready to go. Also ESLint, Prettier, Husky, Commit-lint and Atomic Design for components.",
-  "homepage": "https://github.com/jvidalv/vital#readme",
+  "description": "Countries dropdowns based on Starter template for Vite with React (TypeScript). Supports Tailwind. Vitest and @react/testing-library configured and ready to go. Also ESLint, Prettier, Husky, Commit-lint and Atomic Design for components.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jvidalv/vital.git"
   },
-  "author": "Josep Vidal <josepvidalvidal@gmail.com>",
+  "author": "Peter Lai",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/jvidalv/vital/issues"
-  },
   "keywords": [
     "react",
     "vite",
     "typescript",
     "vitest",
     "tailwind",
-    "template",
-    "starter",
-    "eslint",
-    "prettier",
-    "husky",
-    "commit-lint"
+    "headlessui"
   ],
   "browserslist": [
     ">0.2%",
@@ -43,6 +34,7 @@
     "postinstall": "husky install"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.19",
     "@heroicons/react": "2.0.18",
     "react": "18.2.0",
     "react-dom": "18.2.0"
