@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { fetchData } from "../api";
 import { CData, DropdownOption } from "src/types/common";
 
 const useFetchStates = (countryId: number | undefined) => {
@@ -10,33 +11,24 @@ const useFetchStates = (countryId: number | undefined) => {
       return;
     }
 
-    const fetchCountries = async () => {
-      setIsLoading(true);
-      try {
-        const response = await fetch(
-          `${import.meta.env.VITE_APP_API_URL}/countries/${countryId}/states`,
-          {
-            method: "GET",
-            headers: {
-              "x-api-key": import.meta.env.VITE_APP_X_API_KEY ?? "",
-            },
-          }
-        );
-        const data = await response.json();
+    setIsLoading(true);
+    fetchData(
+      `${import.meta.env.VITE_APP_API_URL}/countries/${countryId}/states`
+    )
+      .then((data) => {
         setStates(
           data.map((item: CData) => ({
             value: item.id,
             label: item.value,
           }))
         );
-      } catch (error) {
+      })
+      .catch((error) => {
         throw error;
-      } finally {
+      })
+      .finally(() => {
         setIsLoading(false);
-      }
-    };
-
-    fetchCountries();
+      });
   }, [countryId]);
 
   return { states, isLoading };
