@@ -23,6 +23,7 @@ I have based on React - Typescript - Tailwind, bootstrapped by Vite for the late
 
 ### Development
 
+Add `.env` to your local, following the `.env.example`
 Just run and visit http://127.0.0.1:3000/
 
 ```bash
