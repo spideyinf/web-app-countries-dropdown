@@ -49,7 +49,7 @@ describe("Dropdown test", () => {
   test("Should have option selected", () => {
     const onClick = vi.fn();
     const { getByTestId, getAllByTestId } = render(
-      <Dropdown options={options} onChange={onClick} value={2} />
+      <Dropdown options={options} onChange={onClick} />
     );
 
     const dropdown = getByTestId("dropdown");

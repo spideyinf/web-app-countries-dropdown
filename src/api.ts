@@ -1,6 +1,6 @@
-import { CData } from "src/types/common";
+import { TData } from "src/types/common";
 
-export const fetchData = async (url: string): Promise<CData[]> => {
+export const fetchData = async (url: string): Promise<TData[]> => {
   try {
     const response = await fetch(url, {
       method: "GET",

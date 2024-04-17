@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { fetchData } from "../api";
-import { CData, DropdownOption } from "src/types/common";
+import { TData, TDropdown } from "src/types/common";
 
 const useFetchStates = (countryId: number | undefined) => {
-  const [states, setStates] = useState<DropdownOption[]>([]);
+  const [states, setStates] = useState<TDropdown[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -17,7 +17,7 @@ const useFetchStates = (countryId: number | undefined) => {
     )
       .then((data) => {
         setStates(
-          data.map((item: CData) => ({
+          data.map((item: TData) => ({
             value: item.id,
             label: item.value,
           }))

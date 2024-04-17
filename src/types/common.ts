@@ -1,9 +1,9 @@
-export type DropdownOption = {
+export type TDropdown = {
   value: number;
   label: string;
 };
 
-export type CData = {
+export type TData = {
   id: number;
   value: string;
 };

@@ -5,48 +5,42 @@ import {
   CheckIcon,
   ChevronDownIcon,
 } from "@heroicons/react/20/solid";
-import { DropdownOption } from "src/types/common";
+import { TDropdown } from "src/types/common";
 import clsx from "clsx";
 
 type Props = {
-  options: DropdownOption[];
-  defaultValue?: string | number;
+  options: TDropdown[];
   placeholder?: string;
-  value?: string | number;
+  value?: TDropdown;
   disabled?: boolean;
   isLoading?: boolean;
-  onChange: (value: number) => void;
+  onChange: (value: TDropdown) => void;
 };
 
 const Dropdown = ({
   options = [],
-  defaultValue,
   value,
   disabled,
   isLoading,
   placeholder = "Select an option",
   onChange,
 }: Props) => {
-  const [selected, setSelected] = useState<DropdownOption | null>(null);
+  const [selected, setSelected] = useState<TDropdown | null>(null);
 
-  const handleSelect = (item: DropdownOption) => {
+  const handleSelect = (item: TDropdown) => {
     if (disabled || isLoading) return;
     setSelected(item);
-    onChange(item.value);
+    onChange(item);
   };
 
   useEffect(() => {
     setSelected(
-      options.find((option) => option.value === defaultValue) || null
+      options.find((option) => option.value === value?.value) || null
     );
-  }, [defaultValue, options]);
-
-  useEffect(() => {
-    setSelected(options.find((option) => option.value === value) || null);
   }, [value, options]);
 
   return (
-    <div className="w-full md:w-72">
+    <div className="w-full">
       <Listbox value={selected} onChange={handleSelect}>
         <div className="relative mt-1">
           <Listbox.Button

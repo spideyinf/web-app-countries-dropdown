@@ -1,11 +1,30 @@
 import { ReactElement } from "react";
-import Home from "pages/Home/Home";
+import Home from "pages/Home";
+import Submit from "pages/Submit";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App(): ReactElement {
   return (
-    <main>
-      <Home />
-    </main>
+    <Router>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <main>
+              <Home />
+            </main>
+          }
+        />
+        <Route
+          path="/submit"
+          element={
+            <main>
+              <Submit />
+            </main>
+          }
+        />
+      </Routes>
+    </Router>
   );
 }
 
