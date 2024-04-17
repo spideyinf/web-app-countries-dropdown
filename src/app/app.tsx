@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import Home from "pages/Home";
+import Home from "pages/Home/Home";
 
 function App(): ReactElement {
   return (
